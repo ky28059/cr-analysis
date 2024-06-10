@@ -33,11 +33,11 @@ type Arena = {
     // iconUrls
 }
 
-type BattleType = 'PVP' | 'PVE' | 'CLANMATE' | 'TOURNAMENT' | 'FRIENDLY' | 'SURVIVAL'
+type BattleType = 'PvP' | 'PvE' | 'CLANMATE' | 'TOURNAMENT' | 'FRIENDLY' | 'SURVIVAL' | 'challenge'
     | 'PVP2v2' | 'CLANMATE2v2' | 'CHALLENGE2v2' | 'CLANWAR_COLLECTION_DAY' | 'CLANWAR_WAR_DAY'
-    | 'CASUAL_1V1' | 'CASUAL_2V2' | 'BOAT_BATTLE' | 'BOAT_BATTLE_PRACTICE'
-    | 'RIVER_RACE_PVP' | 'RIVER_RACE_DUEL' | 'RIVER_RACE_DUEL_COLOSSEUM' | 'TUTORIAL' | 'PATH_OF_LEGEND'
-    | 'SEASONAL_BATTLE' | 'UNKNOWN'
+    | 'CASUAL_1V1' | 'CASUAL_2V2' | 'boatBattle' | 'BOAT_BATTLE_PRACTICE'
+    | 'riverRacePvP' | 'RIVER_RACE_DUEL' | 'RIVER_RACE_DUEL_COLOSSEUM' | 'TUTORIAL' | 'pathOfLegend'
+    | 'seasonalBattle' | 'UNKNOWN' // TODO
 
 type DeckSelection = 'COLLECTION' | 'DRAFT' | 'DRAFT_COMPETITIVE' | 'PREDEFINED' | 'EVENT_DECK'
     | 'PICK' | 'WARDECK_PICK' | 'QUADDECK_PICK' | 'UNKNOWN'
@@ -67,7 +67,7 @@ type PlayerBattleRound = {
     princessTowersHitPoints: number[]
 }
 
-type PlayerItemLevel = {
+export type PlayerItemLevel = {
     id: number,
     rarity: Rarity,
     count: number,
