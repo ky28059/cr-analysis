@@ -1,4 +1,5 @@
 export type Battle = {
+    arena: Arena,
     gameMode: GameMode,
     type: BattleType,
     deckSelection: DeckSelection,
