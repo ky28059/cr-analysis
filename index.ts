@@ -11,7 +11,7 @@ import { analyzeBattles } from './util/analysis';
     const cachedIds = new Set(cachedBattles.map(([ts]) => ts));
 
     const newBattles = battles.filter(b => !cachedIds.has(b.battleTime));
-    await cacheBattles(newBattles);
+    cachedBattles.push(...await cacheBattles(newBattles));
 
     // Only trophy road 1v1s where levels matter
     const ladderMatches = cachedBattles.filter(([, type]) => type === 'PvP');
