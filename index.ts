@@ -1,6 +1,6 @@
 import { getBattles } from './lib/players';
 import { cacheBattles, getCachedBattles } from './util/memo';
-import { analyzeBattles } from './util/analysis';
+import { analyzeLevels, analyzeWinRate } from './util/analysis';
 
 
 (async () => {
@@ -16,12 +16,23 @@ import { analyzeBattles } from './util/analysis';
     // Only trophy road 1v1s where levels matter
     const ladderMatches = cachedBattles.filter(([, type]) => type === 'PvP');
     console.log(`Over ${ladderMatches.length} trophy games:`);
+    console.log('-'.repeat(30))
 
-    await analyzeBattles(ladderMatches);
+    analyzeLevels(ladderMatches);
+    analyzeWinRate(ladderMatches);
 
     // Clan war battles
     const cwMatches = cachedBattles.filter(([, type]) => type === 'riverRacePvP');
     console.log(`Over ${cwMatches.length} clan wars games:`);
+    console.log('-'.repeat(30))
 
-    await analyzeBattles(cwMatches);
+    analyzeLevels(cwMatches);
+    analyzeWinRate(cwMatches);
+
+    // Goblin mode :hearts:
+    const gbMatches = cachedBattles.filter(([, , mode]) => mode === 'TeamVsTeam_GoblinBuffs');
+    console.log(`Over ${gbMatches.length} 2v2 goblin buff games:`);
+    console.log('-'.repeat(30))
+
+    analyzeWinRate(gbMatches);
 })()
