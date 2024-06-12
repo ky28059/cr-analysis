@@ -1,26 +1,12 @@
-import type { FileHandle } from 'node:fs/promises';
-import { itemToNormalizedLevel } from '../lib/util';
-import { cacheBattle } from './memo';
-import type { Battle } from '../lib/types';
+import type { CachedBattle } from './memo';
 
 
-export async function analyzeBattles(battlesFile: FileHandle, battles: Battle[]) {
+export async function analyzeBattles(battles: CachedBattle[]) {
     let totalTeamLevel = 0;
     let totalOppLevel = 0;
     let totalDiff = 0;
 
-    for (const battle of battles) {
-        const team = battle.team[0];
-        const opponent = battle.opponent[0];
-
-        const teamLevel = team.cards.reduce((sum, c) => sum + itemToNormalizedLevel(c), 0)
-            + team.supportCards.reduce((sum, c) => sum + itemToNormalizedLevel(c), 0);
-        const oppLevel = opponent.cards.reduce((sum, c) => sum + itemToNormalizedLevel(c), 0)
-            + opponent.supportCards.reduce((sum, c) => sum + itemToNormalizedLevel(c), 0);
-
-        console.log(teamLevel, oppLevel);
-        await cacheBattle(battlesFile, battle, teamLevel, oppLevel);
-
+    for (const [, , teamLevel, oppLevel] of battles) {
         totalTeamLevel += teamLevel;
         totalOppLevel += oppLevel;
         totalDiff += oppLevel - teamLevel;
