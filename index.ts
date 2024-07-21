@@ -20,6 +20,13 @@ import { analyzeLevels, analyzeWinRate } from './util/analysis';
     analyzeLevels(ladderMatches);
     analyzeWinRate(ladderMatches);
 
+    // Path of legend battles
+    const polMatches = battles.filter(([, type]) => type === 'pathOfLegend')
+    console.log(`Over ${polMatches.length} path of legends games:`);
+    console.log('-'.repeat(30))
+
+    analyzeWinRate(polMatches);
+
     // Clan war battles
     const cwMatches = battles.filter(([, type]) => type === 'riverRacePvP');
     console.log(`Over ${cwMatches.length} clan wars games:`);
