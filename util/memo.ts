@@ -3,7 +3,15 @@ import { itemToNormalizedLevel } from '../lib/util';
 import type { Battle } from '../lib/types';
 
 
-export type CachedBattle = [ts: string, type: string, gameMode: string, teamLevel: number, oppLevel: number, teamCrowns: number, oppCrowns: number];
+export type CachedBattle = [
+    ts: string,
+    type: string,
+    gameMode: string,
+    teamLevel: number,
+    oppLevel: number,
+    teamCrowns: number,
+    oppCrowns: number
+];
 
 const BATTLES_FILE_PATH = './battles.csv';
 
@@ -35,8 +43,10 @@ export async function cacheBattles(newBattles: Battle[]) {
             battle.battleTime,
             battle.type,
             battle.gameMode.name,
-            teamLevel, oppLevel,
-            battle.team[0].crowns, battle.opponent[0].crowns
+            teamLevel,
+            oppLevel,
+            battle.team[0].crowns,
+            battle.opponent[0].crowns
         ];
 
         await battlesFile.appendFile(cachedBattle.join(',') + '\n');
