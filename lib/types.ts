@@ -33,7 +33,7 @@ type Arena = {
     // iconUrls
 }
 
-type BattleType = 'PvP' | 'PvE' | 'CLANMATE' | 'TOURNAMENT' | 'FRIENDLY' | 'SURVIVAL' | 'challenge'
+export type BattleType = 'PvP' | 'PvE' | 'CLANMATE' | 'TOURNAMENT' | 'FRIENDLY' | 'SURVIVAL' | 'challenge'
     | 'PVP2v2' | 'CLANMATE2v2' | 'CHALLENGE2v2' | 'CLANWAR_COLLECTION_DAY' | 'CLANWAR_WAR_DAY'
     | 'CASUAL_1V1' | 'CASUAL_2V2' | 'boatBattle' | 'BOAT_BATTLE_PRACTICE'
     | 'riverRacePvP' | 'RIVER_RACE_DUEL' | 'RIVER_RACE_DUEL_COLOSSEUM' | 'TUTORIAL' | 'pathOfLegend'

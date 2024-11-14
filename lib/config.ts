@@ -1,1 +1,1 @@
-export const API_BASE = 'https://api.clashroyale.com/v1'
+export const API_BASE = 'https://proxy.royaleapi.dev/v1'

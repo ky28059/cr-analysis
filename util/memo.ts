@@ -1,36 +1,39 @@
-import { open, readFile, constants } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { itemToNormalizedLevel } from '../lib/util';
 import type { Battle } from '../lib/types';
 
 
-export type CachedBattle = [
-    ts: string,
-    type: string,
-    gameMode: string,
-    teamLevel: number,
-    oppLevel: number,
-    teamCrowns: number,
-    oppCrowns: number
-];
+type RecursivePartial<T> = {
+    [P in keyof T]?:
+        T[P] extends (infer U)[] ? RecursivePartial<U>[] :
+        T[P] extends object | undefined ? RecursivePartial<T[P]> :
+        T[P];
+}
 
-const BATTLES_FILE_PATH = './battles.csv';
+// TODO: more accurate type?
+export type CachedBattle = RecursivePartial<Battle> & {
+    teamLevel: number,
+    oppLevel: number
+};
+
+const BATTLES_FILE_PATH = './battles.json';
+
+export async function merge(data: CachedBattle[]) {
+    const raw = await readFile(BATTLES_FILE_PATH);
+    const oldBattles = JSON.parse(raw.toString());
+
+    await writeFile(BATTLES_FILE_PATH, JSON.stringify([...oldBattles, ...data]));
+}
 
 export async function getCachedBattles() {
     const battlesRaw = await readFile(BATTLES_FILE_PATH);
-
-    return battlesRaw.toString()
-        .split('\n')
-        .map(l => l.split(','))
-        .map(([ts, type, gameMode, teamLevel, oppLevel, teamCrowns, oppCrowns]) => [ts, type, gameMode, Number(teamLevel), Number(oppLevel), Number(teamCrowns), Number(oppCrowns)] satisfies CachedBattle);
+    return JSON.parse(battlesRaw.toString()) as CachedBattle[];
 }
 
 export async function cacheBattles(newBattles: Battle[]) {
     if (!newBattles.length) return [];
 
-    const battlesFile = await open(BATTLES_FILE_PATH, constants.O_APPEND | constants.O_CREAT);
-    const ret = [];
-
-    for (const battle of newBattles) {
+    const ret = newBattles.map((battle) => {
         const team = battle.team[0];
         const opponent = battle.opponent[0];
 
@@ -39,19 +42,9 @@ export async function cacheBattles(newBattles: Battle[]) {
         const oppLevel = opponent.cards.reduce((sum, c) => sum + itemToNormalizedLevel(c), 0)
             + opponent.supportCards.reduce((sum, c) => sum + itemToNormalizedLevel(c), 0);
 
-        const cachedBattle: CachedBattle = [
-            battle.battleTime,
-            battle.type,
-            battle.gameMode.name,
-            teamLevel,
-            oppLevel,
-            battle.team[0].crowns,
-            battle.opponent[0].crowns
-        ];
+        return { ...battle, teamLevel, oppLevel }
+    });
 
-        await battlesFile.appendFile(cachedBattle.join(',') + '\n');
-        ret.push(cachedBattle);
-    }
-
+    await merge(ret);
     return ret;
 }

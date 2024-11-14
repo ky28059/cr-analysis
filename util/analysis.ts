@@ -6,7 +6,7 @@ export function analyzeLevels(battles: CachedBattle[]) {
     let totalOppLevel = 0;
     let totalDiff = 0;
 
-    for (const [, , , teamLevel, oppLevel, teamCrowns, oppCrowns] of battles) {
+    for (const { teamLevel, oppLevel } of battles) {
         totalTeamLevel += teamLevel;
         totalOppLevel += oppLevel;
         totalDiff += oppLevel - teamLevel;
@@ -20,8 +20,9 @@ export function analyzeLevels(battles: CachedBattle[]) {
 export function analyzeWinRate(battles: CachedBattle[]) {
     let wins = 0;
 
-    for (const [, , , , , teamCrowns, oppCrowns] of battles) {
-        if (teamCrowns > oppCrowns) wins++;
+    for (const { team, opponent } of battles) {
+        if (!team?.[0]?.crowns || !opponent?.[0]?.crowns) continue;
+        if (team[0].crowns > opponent[0].crowns) wins++;
     }
 
     console.log('Victories:', wins);
