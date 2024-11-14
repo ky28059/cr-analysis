@@ -1,17 +1,17 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { itemToNormalizedLevel } from '../lib/util';
-import type { Battle } from '../lib/types';
+import type { Battle, BattleType } from '../lib/types';
 
 
-type RecursivePartial<T> = {
-    [P in keyof T]?:
-        T[P] extends (infer U)[] ? RecursivePartial<U>[] :
-        T[P] extends object | undefined ? RecursivePartial<T[P]> :
-        T[P];
+type OldCachedBattle = {
+    battleTime: string,
+    type: BattleType,
+    gameMode: { name: string },
+    team: [{ crowns: number }],
+    opponent: [{ crowns: number }]
 }
 
-// TODO: more accurate type?
-export type CachedBattle = RecursivePartial<Battle> & {
+export type CachedBattle = (OldCachedBattle | Battle) & {
     teamLevel: number,
     oppLevel: number
 };

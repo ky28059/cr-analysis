@@ -21,7 +21,6 @@ export function analyzeWinRate(battles: CachedBattle[]) {
     let wins = 0;
 
     for (const { team, opponent } of battles) {
-        if (!team?.[0]?.crowns || !opponent?.[0]?.crowns) continue;
         if (team[0].crowns > opponent[0].crowns) wins++;
     }
 
