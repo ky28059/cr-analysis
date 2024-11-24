@@ -42,7 +42,7 @@ export type BattleType = 'PvP' | 'PvE' | 'CLANMATE' | 'TOURNAMENT' | 'FRIENDLY' 
 type DeckSelection = 'COLLECTION' | 'DRAFT' | 'DRAFT_COMPETITIVE' | 'PREDEFINED' | 'EVENT_DECK'
     | 'PICK' | 'WARDECK_PICK' | 'QUADDECK_PICK' | 'UNKNOWN'
 
-type PlayerBattleData = {
+export type PlayerBattleData = {
     rounds: PlayerBattleRound[],
     clan: PlayerClan,
     cards: PlayerItemLevel[],

@@ -1,5 +1,5 @@
 import { readFile, writeFile } from 'node:fs/promises';
-import { itemToNormalizedLevel } from '../lib/util';
+import { deckLevel } from '../lib/util';
 import type { Battle, BattleType } from '../lib/types';
 
 
@@ -16,7 +16,7 @@ export type CachedBattle = (OldCachedBattle | Battle) & {
     oppLevel: number
 };
 
-const BATTLES_FILE_PATH = './battles.json';
+export const BATTLES_FILE_PATH = './battles.json';
 
 export async function merge(data: CachedBattle[]) {
     const raw = await readFile(BATTLES_FILE_PATH);
@@ -34,13 +34,8 @@ export async function cacheBattles(newBattles: Battle[]) {
     if (!newBattles.length) return [];
 
     const ret = newBattles.map((battle) => {
-        const team = battle.team[0];
-        const opponent = battle.opponent[0];
-
-        const teamLevel = team.cards.reduce((sum, c) => sum + itemToNormalizedLevel(c), 0)
-            + team.supportCards.reduce((sum, c) => sum + itemToNormalizedLevel(c), 0);
-        const oppLevel = opponent.cards.reduce((sum, c) => sum + itemToNormalizedLevel(c), 0)
-            + opponent.supportCards.reduce((sum, c) => sum + itemToNormalizedLevel(c), 0);
+        const teamLevel = battle.team.reduce((s, t) => s + deckLevel(t), 0);
+        const oppLevel = battle.opponent.reduce((s, t) => s + deckLevel(t), 0);
 
         return { ...battle, teamLevel, oppLevel }
     });
