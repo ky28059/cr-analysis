@@ -75,7 +75,7 @@ export type PlayerItemLevel = {
     starLevel: number,
     evolutionLevel: number,
     used: boolean,
-    // name
+    name: string,
     maxLevel: number,
     elixirCost: number,
     maxEvolutionLevel: number,
