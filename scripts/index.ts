@@ -31,13 +31,6 @@ import type { PlayerBattleData } from '@/lib/types';
     analyzeLevels(cwMatches);
     analyzeWinRate(cwMatches);
 
-    // Goblin mode :hearts:
-    const gbMatches = battles.filter(({ gameMode }) => gameMode?.name === 'TeamVsTeam_GoblinBuffs');
-    console.log(`Over ${gbMatches.length} 2v2 goblin buff games:`);
-    console.log('-'.repeat(30))
-
-    analyzeWinRate(gbMatches);
-
     // 2v2 ladder
     const doublesLadder = battles
         .filter(({ gameMode }) => gameMode?.name === 'Ladder_TeamVsTeam')
@@ -56,18 +49,4 @@ import type { PlayerBattleData } from '@/lib/types';
 
     analyzeLevels(doublesLadderB01lers);
     analyzeWinRate(doublesLadderB01lers);
-
-    // PoL mega knight / evo mk
-    const trackedPolMatches = polMatches.filter((b) => 'cards' in b.opponent[0]);
-    const mkMatches = trackedPolMatches.filter((b) => b.opponent.some((t: PlayerBattleData | { crowns: number }) => 'cards' in t && !!t.cards.find(c => c.name === 'Mega Knight' && c.evolutionLevel !== 1)));
-    console.log(`Of ${trackedPolMatches.length} path of legends games, ${mkMatches.length} were against (non-evo) Mega Knight (${((mkMatches.length / trackedPolMatches.length) * 100).toFixed(2)}%):`);
-    console.log('-'.repeat(30))
-
-    analyzeWinRate(mkMatches);
-
-    const evoMkMatches = trackedPolMatches.filter((b) => b.opponent.some((t: PlayerBattleData | { crowns: number }) => 'cards' in t && !!t.cards.find(c => c.name === 'Mega Knight' && c.evolutionLevel === 1)));
-    console.log(`Of ${trackedPolMatches.length} path of legends games, ${evoMkMatches.length} were against Evo Mega Knight (${((evoMkMatches.length / trackedPolMatches.length) * 100).toFixed(2)}%):`);
-    console.log('-'.repeat(30))
-
-    analyzeWinRate(evoMkMatches);
 })()
