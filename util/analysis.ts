@@ -1,12 +1,16 @@
-import type { CachedBattle } from './memo';
+import type { Battle } from '../lib/types';
+import { deckLevel } from '../lib/util';
 
 
-export function analyzeLevels(battles: CachedBattle[]) {
+export function analyzeLevels(battles: Battle[]) {
     let totalTeamLevel = 0;
     let totalOppLevel = 0;
     let totalDiff = 0;
 
-    for (const { teamLevel, oppLevel } of battles) {
+    for (const { team, opponent } of battles) {
+        const teamLevel = team.reduce((s, t) => s + deckLevel(t), 0);
+        const oppLevel = opponent.reduce((s, t) => s + deckLevel(t), 0);
+
         totalTeamLevel += teamLevel;
         totalOppLevel += oppLevel;
         totalDiff += oppLevel - teamLevel;
@@ -17,7 +21,7 @@ export function analyzeLevels(battles: CachedBattle[]) {
     console.log('On average, opponent decks were', totalDiff / battles.length, 'levels higher.\n');
 }
 
-export function analyzeWinRate(battles: CachedBattle[]) {
+export function analyzeWinRate(battles: Battle[]) {
     let wins = 0;
 
     for (const { team, opponent } of battles) {

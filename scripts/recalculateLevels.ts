@@ -1,5 +1,5 @@
 import { writeFile } from 'node:fs/promises';
-import { BATTLES_FILE_PATH, getCachedBattles, merge } from '../util/memo';
+import { BATTLES_FILE_PATH, getCachedBattles, merge } from '../lib/memo';
 import { deckLevel } from '../lib/util';
 import type { PlayerBattleData } from '../lib/types';
 

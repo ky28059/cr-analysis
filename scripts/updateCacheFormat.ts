@@ -1,5 +1,5 @@
 import { readFile, unlink } from 'node:fs/promises';
-import { CachedBattle, merge } from '../util/memo';
+import { CachedBattle, merge } from '../lib/memo';
 import type { BattleType } from '../lib/types';
 
 const BATTLES_CSV_PATH = './battles.csv';

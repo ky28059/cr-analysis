@@ -1,15 +1,10 @@
-import { getBattles } from './lib/players';
-import { cacheBattles, getCachedBattles } from './util/memo';
+import { getAndUpdateBattles } from './lib/memo';
 import { analyzeLevels, analyzeWinRate } from './util/analysis';
 import type { PlayerBattleData } from './lib/types';
 
 
 (async () => {
-    const battles = await getCachedBattles();
-    const cachedIds = new Set(battles.map(({ battleTime }) => battleTime));
-
-    const newBattles = (await getBattles('#2YYL9GLU8')).filter(b => !cachedIds.has(b.battleTime));
-    battles.push(...await cacheBattles(newBattles));
+    const battles = await getAndUpdateBattles();
 
     console.log(`Analyzing past ${battles.length} games.\n`);
 
@@ -64,8 +59,8 @@ import type { PlayerBattleData } from './lib/types';
 
     // PoL mega knight / evo mk
     const trackedPolMatches = polMatches.filter((b) => 'cards' in b.opponent[0]);
-    const mkMatches = trackedPolMatches.filter((b) => b.opponent.some((t: PlayerBattleData | { crowns: number }) => 'cards' in t && !!t.cards.find(c => c.name === 'Mega Knight')));
-    console.log(`Of ${trackedPolMatches.length} path of legends games, ${mkMatches.length} were against Mega Knight (${((mkMatches.length / trackedPolMatches.length) * 100).toFixed(2)}%):`);
+    const mkMatches = trackedPolMatches.filter((b) => b.opponent.some((t: PlayerBattleData | { crowns: number }) => 'cards' in t && !!t.cards.find(c => c.name === 'Mega Knight' && c.evolutionLevel !== 1)));
+    console.log(`Of ${trackedPolMatches.length} path of legends games, ${mkMatches.length} were against (non-evo) Mega Knight (${((mkMatches.length / trackedPolMatches.length) * 100).toFixed(2)}%):`);
     console.log('-'.repeat(30))
 
     analyzeWinRate(mkMatches);
