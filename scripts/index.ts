@@ -1,6 +1,6 @@
-import { getAndUpdateBattles } from './lib/memo';
-import { analyzeLevels, analyzeWinRate } from './util/analysis';
-import type { PlayerBattleData } from './lib/types';
+import { getAndUpdateBattles } from '@/lib/memo';
+import { analyzeLevels, analyzeWinRate } from '@/util/analysis';
+import type { PlayerBattleData } from '@/lib/types';
 
 
 (async () => {

@@ -1,5 +1,5 @@
-import type { Battle } from '../lib/types';
-import { deckLevel } from '../lib/util';
+import type { Battle } from '@/lib/types';
+import { deckLevel } from '@/lib/util';
 
 
 export function analyzeLevels(battles: Battle[]) {
