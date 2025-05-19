@@ -25,7 +25,7 @@ export default function DeckSidebar(props: DeckSidebarProps) {
     }, [props.decks, props.active]);
 
     return (
-        <aside className="px-6 flex flex-col gap-3 w-80 border-r">
+        <aside className="px-6 flex-none flex flex-col gap-3 w-80 border-r">
             <h3 className="font-semibold mb-1">Filter by deck:</h3>
 
             {sorted.map(([s, active]) => {

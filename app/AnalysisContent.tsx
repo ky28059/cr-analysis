@@ -7,6 +7,8 @@ import DeckSidebar from '@/app/DeckSidebar';
 
 // Utils
 import type { Battle, BattleType, PlayerItemLevel } from '@/lib/types';
+import CardPopularityRanking from '@/app/CardPopularityRanking';
+import { countCardFrequencies } from '@/lib/util';
 
 
 type AnalysisContentProps = {
@@ -36,6 +38,9 @@ export default function AnalysisContent(props: AnalysisContentProps) {
         return modeBattles.filter((b) => activeDecks[serializeDeck(b.team[0].cards)]);
     }, [decks, activeDecks]);
 
+    // TODO: too many memos?
+    const counts = useMemo(() => countCardFrequencies(activeBattles), [activeBattles]);
+
     return (
         <div>
             <div>{mode}</div>
@@ -47,9 +52,15 @@ export default function AnalysisContent(props: AnalysisContentProps) {
                     setActive={setActiveDecks}
                 />
 
-                <div>{activeBattles.length}</div>
-
-                <div>{modeBattles.length}</div>
+                <main className="w-full">
+                    <p className="text-white/75 text-sm mb-4">
+                        Analyzing {activeBattles.length} of {modeBattles.length} battles.
+                    </p>
+                    <CardPopularityRanking
+                        counts={counts}
+                        total={activeBattles.length}
+                    />
+                </main>
             </div>
         </div>
     )
