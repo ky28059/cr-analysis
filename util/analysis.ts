@@ -1,5 +1,5 @@
 import type { Battle } from '@/lib/types';
-import { deckLevel } from '@/lib/util';
+import { countWins, teamDeckLevel } from '@/lib/util';
 
 
 export function analyzeLevels(battles: Battle[]) {
@@ -8,8 +8,8 @@ export function analyzeLevels(battles: Battle[]) {
     let totalDiff = 0;
 
     for (const { team, opponent } of battles) {
-        const teamLevel = team.reduce((s, t) => s + deckLevel(t), 0);
-        const oppLevel = opponent.reduce((s, t) => s + deckLevel(t), 0);
+        const teamLevel = teamDeckLevel(team);
+        const oppLevel = teamDeckLevel(opponent);
 
         totalTeamLevel += teamLevel;
         totalOppLevel += oppLevel;
@@ -22,11 +22,7 @@ export function analyzeLevels(battles: Battle[]) {
 }
 
 export function analyzeWinRate(battles: Battle[]) {
-    let wins = 0;
-
-    for (const { team, opponent } of battles) {
-        if (team[0].crowns > opponent[0].crowns) wins++;
-    }
+    const wins = countWins(battles);
 
     console.log('Victories:', wins);
     console.log('Losses:', battles.length - wins);

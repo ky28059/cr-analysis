@@ -82,7 +82,7 @@ export type PlayerItemLevel = {
     count: number,
     level: number,
     starLevel: number,
-    evolutionLevel: number,
+    evolutionLevel?: number,
     used: boolean,
     name: string,
     maxLevel: number,
