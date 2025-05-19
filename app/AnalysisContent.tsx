@@ -4,10 +4,11 @@ import { useEffect, useMemo, useState } from 'react';
 
 // Components
 import DeckSidebar from '@/app/DeckSidebar';
+import CardPopularityRanking from '@/app/CardPopularityRanking';
+import CardWinrateRanking from '@/app/CardWinrateRanking';
 
 // Utils
 import type { Battle, BattleType, PlayerItemLevel } from '@/lib/types';
-import CardPopularityRanking from '@/app/CardPopularityRanking';
 import { countCardFrequencies } from '@/lib/util';
 
 
@@ -45,7 +46,7 @@ export default function AnalysisContent(props: AnalysisContentProps) {
         <div>
             <div>{mode}</div>
 
-            <div className="flex gap-8">
+            <div className="flex">
                 <DeckSidebar
                     decks={decks}
                     active={activeDecks}
@@ -56,9 +57,25 @@ export default function AnalysisContent(props: AnalysisContentProps) {
                     <p className="text-white/75 text-sm mb-4">
                         Analyzing {activeBattles.length} of {modeBattles.length} battles.
                     </p>
+
+                    <div className="px-12 mb-3">
+                        <h3 className="font-bold text-2xl">Card frequency</h3>
+                        <p className="opacity-50 text-sm">Ranked by % of battles each card appears in.</p>
+                    </div>
                     <CardPopularityRanking
                         counts={counts}
                         total={activeBattles.length}
+                    />
+
+                    <div className="mt-12 px-12 mb-3">
+                        <h3 className="font-bold text-2xl">Card winrate</h3>
+                        <p className="opacity-50 text-sm">
+                            Ranked by % of battles won against each card. Highlighted entries represent cards for which
+                            there may not be enough data to judge (e.g. {'<'} 10 battles).
+                        </p>
+                    </div>
+                    <CardWinrateRanking
+                        counts={counts}
                     />
                 </main>
             </div>

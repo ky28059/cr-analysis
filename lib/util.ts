@@ -34,23 +34,25 @@ function hashCard(c: PlayerItemLevel) {
 /**
  * Counts the frequencies that cards show up in your opponents decks in the given list of battles.
  * @param battles The battles to analyze.
- * @returns A list of card counts, name, and icon, sorted from most appearances to least.
+ * @returns A list of card counts, wins, name, and icon, sorted from most appearances to least.
  */
 export function countCardFrequencies(battles: Battle[]) {
-    const freqs: { [key: string]: { count: number, name: string, icon: string } } = {};
+    const freqs: { [key: string]: { count: number, wins: number, name: string, icon: string } } = {};
 
-    for (const { opponent } of battles) {
-        const cards = opponent.flatMap((d) => d.cards);
+    for (const b of battles) {
+        const cards = b.opponent.flatMap((d) => d.cards);
 
         for (const card of cards) {
             const key = hashCard(card);
             if (!freqs[key]) freqs[key] = {
                 count: 0,
+                wins: 0,
                 name: (card.evolutionLevel ? 'Evo ' : '') + card.name,
                 icon: card.evolutionLevel ? card.iconUrls.evolutionMedium! : card.iconUrls.medium!
             }
 
             freqs[key].count++;
+            if (isWin(b)) freqs[key].wins++;
         }
     }
 
