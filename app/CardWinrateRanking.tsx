@@ -15,7 +15,7 @@ export default function CardWinrateRanking(props: CardWinrateRankingProps) {
     return (
         <div className="w-full">
             {sorted.length > 0 ? sorted.map((c) => {
-                const wrDiff = (c.wins / c.count) - props.winrate;
+                const wr = c.wins / c.count;
                 return (
                     <div
                         className={'flex gap-3 items-center px-12' + (c.count < 10 ? ' bg-gray-200/10' : '')}
@@ -31,14 +31,15 @@ export default function CardWinrateRanking(props: CardWinrateRankingProps) {
 
                         <div className="w-full">
                             <ProgressBar
-                                filled={c.wins / c.count}
+                                filled={wr}
                                 marker={props.winrate}
+                                // offset={0.5 - props.winrate}
                             />
                             <p className="text-sm opacity-75">
-                                {((c.wins * 100) / c.count).toFixed(2)}% winrate
-                                (<span className={wrDiff > 0 ? 'text-lime-500' : 'text-red-500'}>
-                                    {wrDiff > 0 && '+'}
-                                    {(wrDiff * 100).toFixed(2)}%
+                                {(wr * 100).toFixed(2)}% winrate
+                                (<span style={{ color: wrToOklch(wr) }}>
+                                    {wr > props.winrate && '+'}
+                                    {((wr - props.winrate) * 100).toFixed(2)}%
                                 </span>)
                             </p>
                         </div>
@@ -51,4 +52,11 @@ export default function CardWinrateRanking(props: CardWinrateRankingProps) {
             )}
         </div>
     )
+}
+
+export function wrToOklch(wr: number) {
+    const remapped = Math.max(Math.min(0.75 * Math.cbrt(wr - 0.5) + 0.5, 1), 0);
+
+    const hue = (128.85 - 16.88) * remapped + 16.88;
+    return `oklch(70% 0.25 ${hue})`;
 }

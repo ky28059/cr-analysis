@@ -21,6 +21,7 @@ export default function CardPopularityRanking(props: CardPopularityRankingProps)
 
                     <div className="w-full">
                         <div
+                            // TODO: better color?
                             className="bg-red-500 h-4 mb-1 rounded"
                             style={{ width: `${(c.count * 100) / props.total}%` }}
                         />

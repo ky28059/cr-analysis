@@ -74,7 +74,7 @@ export default function AnalysisContent(props: AnalysisContentProps) {
                         <h4 className="font-semibold mb-1">
                             Gamemode winrate
                         </h4>
-                        <ProgressBar filled={winrate} marker={0.5} />
+                        <ProgressBar filled={winrate} marker={0.5} offset={0.15} />
                         <p className="text-xs opacity-50">
                             ({(winrate * 100).toFixed(2)}%, {wins} wins of {activeBattles.length} games)
                         </p>
