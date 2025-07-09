@@ -12,7 +12,7 @@ export default function CardWinrateRanking(props: CardWinrateRankingProps) {
 
     return (
         <div className="w-full">
-            {sorted.map((c) => (
+            {sorted.length > 0 ? sorted.map((c) => (
                 <div
                     className={'flex gap-3 items-center px-12' + (c.count < 10 ? ' bg-gray-200/10' : '')}
                     key={c.name}
@@ -35,7 +35,11 @@ export default function CardWinrateRanking(props: CardWinrateRankingProps) {
                         </p>
                     </div>
                 </div>
-            ))}
+            )) : (
+                <em className="px-12 text-white/50">
+                    No cards match your search.
+                </em>
+            )}
         </div>
     )
 }

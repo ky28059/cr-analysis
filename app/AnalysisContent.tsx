@@ -18,6 +18,7 @@ type AnalysisContentProps = {
 
 export default function AnalysisContent(props: AnalysisContentProps) {
     const [mode, setMode] = useState<BattleType>('pathOfLegend');
+    const [query, setQuery] = useState('');
 
     const modeBattles = useMemo(() => {
         return props.battles.filter((b) => b.type === mode);
@@ -42,6 +43,9 @@ export default function AnalysisContent(props: AnalysisContentProps) {
     // TODO: too many memos?
     const wins = useMemo(() => countWins(activeBattles), [activeBattles]);
     const counts = useMemo(() => countCardFrequencies(activeBattles), [activeBattles]);
+    const filtered = useMemo(() => {
+        return counts.filter((c) => c.name.toLowerCase().includes(query.toLowerCase()))
+    }, [counts, query]);
 
     return (
         <div>
@@ -76,6 +80,14 @@ export default function AnalysisContent(props: AnalysisContentProps) {
                             ({(wins * 100 / activeBattles.length).toFixed(2)}%,{' '}
                             {wins} wins of {activeBattles.length} games)
                         </p>
+
+                        <input
+                            className="px-3 py-2 rounded bg-white/10 border border-white/10 mt-6 text-sm"
+                            type="text"
+                            placeholder="Search by card"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
                     </div>
 
                     <div className="px-12 mb-3">
@@ -83,7 +95,7 @@ export default function AnalysisContent(props: AnalysisContentProps) {
                         <p className="opacity-50 text-sm">Ranked by % of battles each card appears in.</p>
                     </div>
                     <CardPopularityRanking
-                        counts={counts}
+                        counts={filtered}
                         total={activeBattles.length}
                     />
 
@@ -95,7 +107,7 @@ export default function AnalysisContent(props: AnalysisContentProps) {
                         </p>
                     </div>
                     <CardWinrateRanking
-                        counts={counts}
+                        counts={filtered}
                     />
                 </main>
             </div>

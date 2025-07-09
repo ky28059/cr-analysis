@@ -6,7 +6,7 @@ type CardPopularityRankingProps = {
 export default function CardPopularityRanking(props: CardPopularityRankingProps) {
     return (
         <div className="items-center w-full">
-            {props.counts.map((c) => (
+            {props.counts.length > 0 ? props.counts.map((c) => (
                 <div
                     className="flex gap-3 items-center px-12"
                     key={c.name}
@@ -29,7 +29,11 @@ export default function CardPopularityRanking(props: CardPopularityRankingProps)
                         </p>
                     </div>
                 </div>
-            ))}
+            )) : (
+                <em className="px-12 text-white/50">
+                    No cards match your search.
+                </em>
+            )}
         </div>
     )
 }
