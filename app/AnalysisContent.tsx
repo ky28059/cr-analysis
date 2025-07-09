@@ -7,6 +7,7 @@ import Header from '@/app/Header';
 import DeckSidebar from '@/app/DeckSidebar';
 import CardPopularityRanking from '@/app/CardPopularityRanking';
 import CardWinrateRanking from '@/app/CardWinrateRanking';
+import ProgressBar from '@/components/ProgressBar';
 
 // Utils
 import type { Battle, BattleType, PlayerItemLevel } from '@/lib/types';
@@ -48,6 +49,8 @@ export default function AnalysisContent(props: AnalysisContentProps) {
         return counts.filter((c) => c.name.toLowerCase().includes(query.toLowerCase()))
     }, [counts, query]);
 
+    const winrate = wins / activeBattles.length;
+
     return (
         <div>
             <Header mode={mode} />
@@ -71,19 +74,9 @@ export default function AnalysisContent(props: AnalysisContentProps) {
                         <h4 className="font-semibold mb-1">
                             Gamemode winrate
                         </h4>
-                        <div className="relative bg-red-500/30 rounded">
-                            <div
-                                className="absolute h-6 border-l border-white/50 -top-1"
-                                style={{ left: '50%' }}
-                            />
-                            <div
-                                className="bg-red-500 h-4 mb-1 rounded"
-                                style={{ width: `${(wins * 100) / activeBattles.length}%` }}
-                            />
-                        </div>
+                        <ProgressBar filled={winrate} marker={0.5} />
                         <p className="text-xs opacity-50">
-                            ({(wins * 100 / activeBattles.length).toFixed(2)}%,{' '}
-                            {wins} wins of {activeBattles.length} games)
+                            ({(winrate * 100).toFixed(2)}%, {wins} wins of {activeBattles.length} games)
                         </p>
 
                         <input
@@ -113,6 +106,7 @@ export default function AnalysisContent(props: AnalysisContentProps) {
                     </div>
                     <CardWinrateRanking
                         counts={filtered}
+                        winrate={winrate}
                     />
                 </main>
             </div>
