@@ -9,7 +9,7 @@ import CardWinrateRanking from '@/app/CardWinrateRanking';
 
 // Utils
 import type { Battle, BattleType, PlayerItemLevel } from '@/lib/types';
-import { countCardFrequencies } from '@/lib/util';
+import { countCardFrequencies, countWins } from '@/lib/util';
 
 
 type AnalysisContentProps = {
@@ -40,6 +40,7 @@ export default function AnalysisContent(props: AnalysisContentProps) {
     }, [decks, activeDecks]);
 
     // TODO: too many memos?
+    const wins = useMemo(() => countWins(activeBattles), [activeBattles]);
     const counts = useMemo(() => countCardFrequencies(activeBattles), [activeBattles]);
 
     return (
@@ -53,10 +54,29 @@ export default function AnalysisContent(props: AnalysisContentProps) {
                     setActive={setActiveDecks}
                 />
 
-                <main className="w-full">
-                    <p className="text-white/75 text-sm mb-4">
-                        Analyzing {activeBattles.length} of {modeBattles.length} battles.
-                    </p>
+                <main className="w-full py-12">
+                    <div className="px-12 mb-12">
+                        <h1 className="font-bold text-4xl mb-2">
+                            {'Path of Legends'} statistics
+                        </h1>
+                        <p className="text-white/50 text-sm mb-6">
+                            Analyzing {activeBattles.length} of {modeBattles.length} battles.
+                        </p>
+
+                        <h4 className="font-semibold mb-1">
+                            Gamemode winrate
+                        </h4>
+                        <div className="bg-red-500/30 rounded">
+                            <div
+                                className="bg-red-500 h-4 mb-1 rounded"
+                                style={{ width: `${(wins * 100) / activeBattles.length}%` }}
+                            />
+                        </div>
+                        <p className="text-xs opacity-50">
+                            ({(wins * 100 / activeBattles.length).toFixed(2)}%,{' '}
+                            {wins} wins of {activeBattles.length} games)
+                        </p>
+                    </div>
 
                     <div className="px-12 mb-3">
                         <h3 className="font-bold text-2xl">Card frequency</h3>

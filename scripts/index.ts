@@ -31,22 +31,12 @@ import type { PlayerBattleData } from '@/lib/types';
     analyzeLevels(cwMatches);
     analyzeWinRate(cwMatches);
 
-    // 2v2 ladder
-    const doublesLadder = battles
-        .filter(({ gameMode }) => gameMode?.name === 'Ladder_TeamVsTeam')
-        .filter(({ team }) => team.length === 1 || team.some((t) => (t as PlayerBattleData).name === 'Gunstable'));
-    console.log(`Over ${doublesLadder.length} (non-b01lers) 2v2 ladder games:`);
+    // 2v2
+    const doubles = battles
+        .filter(({ gameMode }) => gameMode.name === 'TeamVsTeam')
+        .filter(({ team }) => team.some((t) => (t as PlayerBattleData).name === 'Gunstable'));
+    console.log(`Over ${doubles.length} (kepler) 2v2 games:`);
     console.log('-'.repeat(30))
 
-    analyzeLevels(doublesLadder);
-    analyzeWinRate(doublesLadder);
-
-    const doublesLadderB01lers = battles
-        .filter(({ gameMode }) => gameMode?.name === 'Ladder_TeamVsTeam')
-        .filter(({ team }) => team.length !== 1 && !team.some((t) => (t as PlayerBattleData).name === 'Gunstable'));
-    console.log(`Over ${doublesLadderB01lers.length} (b01lers) 2v2 ladder games:`);
-    console.log('-'.repeat(30))
-
-    analyzeLevels(doublesLadderB01lers);
-    analyzeWinRate(doublesLadderB01lers);
+    analyzeWinRate(doubles);
 })()
