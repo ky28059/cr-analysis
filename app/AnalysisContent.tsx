@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 // Components
+import Header from '@/app/Header';
 import DeckSidebar from '@/app/DeckSidebar';
 import CardPopularityRanking from '@/app/CardPopularityRanking';
 import CardWinrateRanking from '@/app/CardWinrateRanking';
@@ -49,7 +50,7 @@ export default function AnalysisContent(props: AnalysisContentProps) {
 
     return (
         <div>
-            <div>{mode}</div>
+            <Header mode={mode} />
 
             <div className="flex">
                 <DeckSidebar
@@ -70,7 +71,11 @@ export default function AnalysisContent(props: AnalysisContentProps) {
                         <h4 className="font-semibold mb-1">
                             Gamemode winrate
                         </h4>
-                        <div className="bg-red-500/30 rounded">
+                        <div className="relative bg-red-500/30 rounded">
+                            <div
+                                className="absolute h-6 border-l border-white/50 -top-1"
+                                style={{ left: '50%' }}
+                            />
                             <div
                                 className="bg-red-500 h-4 mb-1 rounded"
                                 style={{ width: `${(wins * 100) / activeBattles.length}%` }}
@@ -82,7 +87,7 @@ export default function AnalysisContent(props: AnalysisContentProps) {
                         </p>
 
                         <input
-                            className="px-3 py-2 rounded bg-white/10 border border-white/10 mt-6 text-sm"
+                            className="px-3 py-2 rounded text-foreground bg-white/10 border border-white/10 mt-6 text-sm"
                             type="text"
                             placeholder="Search by card"
                             value={query}
