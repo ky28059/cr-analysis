@@ -21,6 +21,7 @@ import type { PlayerBattleData } from '@/lib/types';
     console.log(`Over ${polMatches.length} path of legends games:`);
     console.log('-'.repeat(30))
 
+    analyzeLevels(polMatches);
     analyzeWinRate(polMatches);
 
     // Clan war battles

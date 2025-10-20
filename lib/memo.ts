@@ -3,7 +3,6 @@ import { readFile, writeFile } from 'node:fs/promises';
 // Utils
 import type { Battle } from './types';
 import { getBattles } from './players';
-import { PLAYER_TAG } from './config';
 
 
 export const BATTLES_FILE_PATH = './battles.json';
@@ -32,7 +31,7 @@ export async function getAndUpdateBattles() {
     const battles = await getCachedBattles();
     const cachedIds = new Set(battles.map(({ battleTime }) => battleTime));
 
-    const newBattles = (await getBattles(PLAYER_TAG)).filter(b => !cachedIds.has(b.battleTime));
+    const newBattles = (await getBattles(process.env.PLAYER_TAG!)).filter(b => !cachedIds.has(b.battleTime));
     await cacheBattles(newBattles);
     battles.push(...newBattles);
 
