@@ -20,6 +20,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "set TS_NODE_PROJECT=tsconfig.node.json&& node -r ts-node/register --env-file=.env scripts/index.ts"
+    "start": "set TS_NODE_PROJECT=tsconfig.node.json&& node -r ts-node/register --env-file=.env scripts/index.ts",
+    "info": "ts-node -P tsconfig.node.json scripts/info.ts"
   }
 }

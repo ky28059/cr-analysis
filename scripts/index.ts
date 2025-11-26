@@ -9,7 +9,7 @@ import type { PlayerBattleData } from '@/lib/types';
     console.log(`Analyzing past ${battles.length} games.\n`);
 
     // Only trophy road 1v1s where levels matter
-    const ladderMatches = battles.filter(({ type }) => type === 'PvP');
+    const ladderMatches = battles.filter(({ type }) => type === 'PvP' || type === 'trail');
     console.log(`Over ${ladderMatches.length} trophy games:`);
     console.log('-'.repeat(30))
 

@@ -29,7 +29,8 @@ type GameModeName = 'Ranked1v1_NewArena' | '7xElixir_Friendly' | 'Ranked1v1_NewA
     | 'Event_DarkElixir_Spawn_TeamVsTeam' | 'Ladder' | 'Ladder_CrownRush' | 'Ranked1v1_NewArena2' | 'TeamVsTeam'
     | 'Ranked1v1_NewArena2_GoldRush' | 'Event_Blizzard_Mode' | 'EventDeck_Holiday_Feast'
     | 'Draft_Competitive_SuperCards' | 'Touchdown_Event' | 'Challenge_AllCards_EventDeck_NoSet' | 'Ladder_Classic'
-    | 'MirrorDeck_EVO' | '7xElixir_Friendly_EventDeck' | 'DraftMode_Princess'
+    | 'MirrorDeck_EVO' | '7xElixir_Friendly_EventDeck' | 'DraftMode_Princess' | 'TripleElixir_Ladder' | 'Rage_Ladder'
+    | 'RampUpElixir_Ladder' | 'EventDeck_4Card' | '7xElixir_Ladder' | 'ClanWar_BoatBattle'
 
 type GameMode = {
     id: number,
@@ -46,10 +47,10 @@ export type BattleType = 'PvP' | 'PvE' | 'clanMate' | 'TOURNAMENT' | 'friendly' 
     | 'PVP2v2' | 'clanMate2v2' | 'CHALLENGE2v2' | 'CLANWAR_COLLECTION_DAY' | 'CLANWAR_WAR_DAY'
     | 'CASUAL_1V1' | 'CASUAL_2V2' | 'boatBattle' | 'BOAT_BATTLE_PRACTICE'
     | 'riverRacePvP' | 'RIVER_RACE_DUEL' | 'RIVER_RACE_DUEL_COLOSSEUM' | 'TUTORIAL' | 'pathOfLegend'
-    | 'seasonalBattle' | 'UNKNOWN' // TODO
+    | 'seasonalBattle' | 'PRACTICE' | 'trail' | 'UNKNOWN' // TODO
 
-type DeckSelection = 'COLLECTION' | 'DRAFT' | 'DRAFT_COMPETITIVE' | 'PREDEFINED' | 'EVENT_DECK'
-    | 'PICK' | 'WARDECK_PICK' | 'QUADDECK_PICK' | 'UNKNOWN'
+type DeckSelection = 'collection' | 'draft' | 'draftCompetitive' | 'predefined' | 'eventDeck'
+    | 'pick' | 'WARDECK_PICK' | 'QUADDECK_PICK' | 'UNKNOWN'
 
 export type PlayerBattleData = {
     rounds: PlayerBattleRound[],

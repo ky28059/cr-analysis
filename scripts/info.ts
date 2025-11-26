@@ -1,7 +1,4 @@
-import { writeFile } from 'node:fs/promises';
-import { BATTLES_FILE_PATH, getCachedBattles, merge } from '../lib/memo';
-import { deckLevel } from '../lib/util';
-import type { PlayerBattleData } from '../lib/types';
+import { BATTLES_FILE_PATH, getCachedBattles, merge } from '@/lib/memo';
 
 
 ;(async () => {
@@ -12,4 +9,7 @@ import type { PlayerBattleData } from '../lib/types';
 
     const modes = new Set(battles.map(({ gameMode }) => gameMode.name));
     console.log(modes);
+
+    const deckSelections = new Set(battles.map(({ deckSelection }) => deckSelection));
+    console.log(deckSelections);
 })();
