@@ -91,7 +91,8 @@ export type PlayerItemLevel = {
     maxEvolutionLevel: number,
     iconUrls: {
         medium: string,
-        evolutionMedium?: string // If evolution exists
+        evolutionMedium?: string, // If evolution exists
+        heroMedium?: string, // If hero exists
     }
 }
 

@@ -2,6 +2,7 @@
 
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import type { Battle } from '@/lib/types';
+import { imageForCard } from '@/lib/util';
 
 
 type DeckSidebarProps = {
@@ -43,7 +44,7 @@ export default function DeckSidebar(props: DeckSidebarProps) {
                             {cards.map((c) => (
                                 <div key={c.id} className="w-max">
                                     <img
-                                        src={c.evolutionLevel ? c.iconUrls.evolutionMedium : c.iconUrls.medium}
+                                        src={imageForCard(c)}
                                         className="h-16"
                                     />
                                 </div>

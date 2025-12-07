@@ -47,9 +47,10 @@ export function countCardFrequencies(battles: Battle[]) {
             if (!freqs[key]) freqs[key] = {
                 count: 0,
                 wins: 0,
-                name: (card.evolutionLevel ? 'Evo ' : '') + card.name,
-                icon: card.evolutionLevel ? card.iconUrls.evolutionMedium! : card.iconUrls.medium!
+                name: nameForCard(card),
+                icon: imageForCard(card),
             }
+            if (!freqs[key].icon) freqs[key].icon = imageForCard(card);
 
             freqs[key].count++;
             if (isWin(b)) freqs[key].wins++;
@@ -57,4 +58,16 @@ export function countCardFrequencies(battles: Battle[]) {
     }
 
     return Object.values(freqs).sort((a, b) => b.count - a.count);
+}
+
+export function imageForCard(c: PlayerItemLevel) {
+    if (c.evolutionLevel === 1) return c.iconUrls.evolutionMedium!;
+    if (c.evolutionLevel === 2) return c.iconUrls.heroMedium!;
+    return c.iconUrls.medium;
+}
+
+export function nameForCard(c: PlayerItemLevel) {
+    if (c.evolutionLevel === 1) return 'Evo ' + c.name;
+    if (c.evolutionLevel === 2) return 'Hero ' + c.name;
+    return c.name;
 }

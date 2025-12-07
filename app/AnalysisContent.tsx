@@ -19,7 +19,7 @@ type AnalysisContentProps = {
 }
 
 export default function AnalysisContent(props: AnalysisContentProps) {
-    const [mode, setMode] = useState<BattleType>('pathOfLegend');
+    const [mode, setMode] = useState<BattleType>('PvP');
     const [query, setQuery] = useState('');
 
     const modeBattles = useMemo(() => {
@@ -52,17 +52,17 @@ export default function AnalysisContent(props: AnalysisContentProps) {
     const winrate = wins / activeBattles.length;
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col h-screen">
             <Header mode={mode} />
 
-            <div className="flex min-h-0">
+            <div className="flex min-h-0 grow">
                 <DeckSidebar
                     decks={decks}
                     active={activeDecks}
                     setActive={setActiveDecks}
                 />
 
-                <main className="w-full py-12 overflow-y-auto">
+                <main className="w-full py-12 overflow-y-scroll">
                     <div className="px-12 mb-12">
                         <h1 className="font-bold text-4xl mb-2">
                             {'Path of Legends'} statistics
