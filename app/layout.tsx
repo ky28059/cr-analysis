@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react';
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono, Inter } from 'next/font/google';
+
+// Components
+import Header from '@/app/Header';
 
 import "./globals.css";
 
@@ -17,7 +20,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
     return (
         <html lang="en">
-            <body className="bg-background text-foreground" style={inter.style}>
+            <body className="bg-background text-foreground flex flex-col h-screen" style={inter.style}>
+                <Header />
                 {children}
             </body>
         </html>

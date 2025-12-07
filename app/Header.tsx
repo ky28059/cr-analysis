@@ -1,14 +1,14 @@
-import type { BattleType } from '@/lib/types';
+import Link from 'next/link';
 
-
-type HeaderProps = {
-    mode: BattleType
-}
-
-export default function Header(props: HeaderProps) {
+export default function Header() {
     return (
-        <div className="border-b border-white/10 bg-black/25 px-4 py-1.5 text-sm">
-            {props.mode}
+        <div className="border-b border-white/10 bg-black/25 px-6 py-2 text-sm flex gap-4">
+            <Link href="/">
+                Trophy Road
+            </Link>
+            <Link href="/pol">
+                Path of Legends
+            </Link>
         </div>
     )
 }
