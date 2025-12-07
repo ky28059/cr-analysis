@@ -25,7 +25,7 @@ export default function DeckSidebar(props: DeckSidebarProps) {
     }, [props.decks, props.active]);
 
     return (
-        <aside className="sticky top-0 h-screen overflow-y-auto bg-black/20 px-6 py-4 flex-none flex flex-col gap-3 w-80 border-r border-r-white/20">
+        <aside className="overflow-y-auto bg-black/20 px-6 py-4 flex-none flex flex-col gap-3 w-80 border-r border-r-white/20">
             <h3 className="font-semibold mb-1">Filter by deck:</h3>
 
             {sorted.map(([s, active]) => {

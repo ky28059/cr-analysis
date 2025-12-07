@@ -52,17 +52,17 @@ export default function AnalysisContent(props: AnalysisContentProps) {
     const winrate = wins / activeBattles.length;
 
     return (
-        <div>
+        <div className="flex flex-col">
             <Header mode={mode} />
 
-            <div className="flex">
+            <div className="flex min-h-0">
                 <DeckSidebar
                     decks={decks}
                     active={activeDecks}
                     setActive={setActiveDecks}
                 />
 
-                <main className="w-full py-12">
+                <main className="w-full py-12 overflow-y-auto">
                     <div className="px-12 mb-12">
                         <h1 className="font-bold text-4xl mb-2">
                             {'Path of Legends'} statistics
