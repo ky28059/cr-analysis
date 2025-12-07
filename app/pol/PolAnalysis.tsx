@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 // Components
 import DeckSidebar from '@/app/DeckSidebar';
@@ -9,7 +9,7 @@ import CardWinrateRanking from '@/app/CardWinrateRanking';
 import ProgressBar from '@/components/ProgressBar';
 
 // Utils
-import type { Battle, BattleType, PlayerItemLevel } from '@/lib/types';
+import type { Battle, PlayerItemLevel } from '@/lib/types';
 import { countCardFrequencies, countWins } from '@/lib/util';
 
 
@@ -19,29 +19,19 @@ type AnalysisContentProps = {
 
 export default function PolAnalysis(props: AnalysisContentProps) {
     const [query, setQuery] = useState('');
-    const modeBattles = useMemo(() => {
-        return props.battles.filter((b) => b.type === 'pathOfLegend');
-    }, []);
+    const decks = useMemo(() => Object.groupBy(props.battles, (b) => serializeDeck(b.team[0].cards)), []);
 
-    const [decks, setDecks] = useState<Partial<Record<string, Battle[]>>>({});
-    const [activeDecks, setActiveDecks] = useState<Record<string, boolean>>({});
-
-    // Recompute decks each time the currently selected mode changes
-    useEffect(() => {
-        const decks = Object.groupBy(modeBattles, (b) => serializeDeck(b.team[0].cards));
-        setDecks(decks);
-
-        const active = Object.fromEntries(Object.entries(decks).map(([k, v]) => [k, true]));
-        setActiveDecks(active);
-    }, [modeBattles]);
-
-    const activeBattles = useMemo(() => {
-        return modeBattles.filter((b) => activeDecks[serializeDeck(b.team[0].cards)]);
-    }, [decks, activeDecks]);
+    const [activeDecks, setActiveDecks] = useState<Record<string, boolean>>(
+        Object.fromEntries(Object.entries(decks).map(([k, v]) => [k, true]))
+    );
 
     // TODO: too many memos?
+    const activeBattles = useMemo(() => {
+        return props.battles.filter((b) => activeDecks[serializeDeck(b.team[0].cards)]);
+    }, [activeDecks]);
     const wins = useMemo(() => countWins(activeBattles), [activeBattles]);
     const counts = useMemo(() => countCardFrequencies(activeBattles), [activeBattles]);
+
     const filtered = useMemo(() => {
         return counts.filter((c) => c.name.toLowerCase().includes(query.toLowerCase()))
     }, [counts, query]);
@@ -62,7 +52,7 @@ export default function PolAnalysis(props: AnalysisContentProps) {
                         Path of Legends statistics
                     </h1>
                     <p className="text-white/50 text-sm mb-6">
-                        Analyzing {activeBattles.length} of {modeBattles.length} battles.
+                        Analyzing {activeBattles.length} of {props.battles.length} battles.
                     </p>
 
                     <h4 className="font-semibold mb-1">

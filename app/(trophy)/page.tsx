@@ -4,6 +4,7 @@ import TrophyAnalysis from '@/app/(trophy)/TrophyAnalysis';
 
 export default async function TrophyRoad() {
     const battles = await getCachedBattles();
+    const filtered = battles.filter((b) => b.type === 'PvP' || b.type === 'trail');
 
-    return <TrophyAnalysis battles={battles} />;
+    return <TrophyAnalysis battles={filtered} />;
 }
