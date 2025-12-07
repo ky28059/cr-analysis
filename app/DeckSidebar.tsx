@@ -32,14 +32,10 @@ export default function DeckSidebar(props: DeckSidebarProps) {
             {sorted.map(([s, active]) => {
                 const battles = props.decks[s]!;
                 const cards = battles[0].team[0].cards;
+                const support = battles[0].team[0].supportCards;
 
                 return (
-                    <div key={s} className="flex gap-2">
-                        <input
-                            type="checkbox"
-                            checked={active}
-                            onChange={(e) => toggleDeck(s, e.target.checked)}
-                        />
+                    <label htmlFor={s} key={s} className="flex">
                         <div className="grid grid-cols-4 flex-none">
                             {cards.map((c) => (
                                 <div key={c.id} className="w-max">
@@ -50,9 +46,29 @@ export default function DeckSidebar(props: DeckSidebarProps) {
                                 </div>
                             ))}
                         </div>
+                        <div className="grid grid-cols-1 flex-none ml-1">
+                            {support.map((c) => (
+                                <div key={c.id} className="w-max">
+                                    <img
+                                        src={imageForCard(c)}
+                                        className="h-16"
+                                    />
+                                </div>
+                            ))}
+                        </div>
 
-                        {battles.length}
-                    </div>
+                        <div className="text-white/50 ml-2">
+                            <input
+                                id={s}
+                                type="checkbox"
+                                checked={active}
+                                onChange={(e) => toggleDeck(s, e.target.checked)}
+                            />
+
+                            <p className="text-xs">Tot:</p>
+                            <p className="text-sm">{battles.length}</p>
+                        </div>
+                    </label>
                 );
             })}
         </aside>
