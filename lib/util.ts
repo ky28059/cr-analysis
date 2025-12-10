@@ -2,7 +2,14 @@ import type { Battle, PlayerBattleData, PlayerItemLevel } from './types';
 
 
 export function itemToNormalizedLevel(c: PlayerItemLevel) {
-    return (14 - c.maxLevel) + c.level;
+    // return (14 - c.maxLevel) + c.level;
+    switch (c.rarity) {
+        case 'common': return c.level;
+        case 'rare': return c.level + 2;
+        case 'epic': return c.level + 5;
+        case 'legendary': return c.level + 8;
+        case 'champion': return c.level + 10;
+    }
 }
 
 export function deckLevel(t: PlayerBattleData) {
